@@ -1,10 +1,9 @@
 # Credential-API-Example
 
-Hi👋, this repo shows you how to attest a created cliam.
-So it means that you are an attester, you can learn how to use our credential-api to attest a claim.
+Hi👋, this repo shows you how to attest to user claim in the [credential platform](https://cred.zkid.app) of zkID.app.
 
 Ready for it?🚀
-I suggest you read the README.md first.
+Please read the README.md first.
 
 ## Usage
 
