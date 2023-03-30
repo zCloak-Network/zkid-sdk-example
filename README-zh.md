@@ -16,7 +16,8 @@ ts-node issue-cred.ts
 
 ## 使用向导
 ### Demo 文件说明
-文件 `cred-flow.ts`向我们展示了如何对一个已经被创建过的claim进行验证，前提是用户已经在我们的 [credential平台](https://cred.zkid.app)创建过claim。
+#### cred-flow.ts
+脚本 `cred-flow.ts`向我们展示了如何对一个已经被创建过的claim进行验证，前提是用户已经在我们的 [credential平台](https://cred.zkid.app)创建过claim。
 通过我们的脚本文件，提供 `receiver`, `sender` 以及 `msgType`即可对查询到的claim进行验证并发放credential，即如下代码部分：
 ```typescript
 const params = [
@@ -39,4 +40,8 @@ const params = [
 对其验证并发放credential可得到输出信息为SUCCESS_0.0，
 
 同样，sender为 `did:zk:0x2808e410610ae6077c6291CF3582Be5EDd2023cc#key-1`的用户创建了两个claim，操作完成后得到的输出信息对应为SUCCESS_1.0与SUCCESS_1.1。
+
+#### issue-cred.ts
+脚本 `issue-cred.ts`向我们展示了如何向DID用户直接发放credential，通过该脚本无需用户提前创造claim即可将Attester自定义的任意credential
+发放给该用户。
 ## Q&A
