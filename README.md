@@ -3,6 +3,7 @@
 Hi👋, this repo shows you how to use our SDK to attest user's claim or directly issue credential in the [credential platform](https://cred.zkid.app) of zkID.app.
 
 Ready for it?🚀 Please read the README.md first.
+> The latest README.md file is [README-zh.md](README-zh.md).
 
 ## Quick Use
 
