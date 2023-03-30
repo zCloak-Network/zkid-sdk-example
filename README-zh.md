@@ -44,4 +44,49 @@ const params = [
 #### issue-cred.ts
 脚本 `issue-cred.ts`向我们展示了如何向DID用户直接发放credential，通过该脚本无需用户提前创造claim即可将Attester自定义的任意credential
 发放给该用户。
+
+### 使用
+我们支持 浏览器，node.js:
+> npm install @zcloak/vc @zcloak/crypto @zcloak/message
+
+```typescript
+import { keys } from "@zcloak/did";
+import { Keyring } from "@zcloak/keyring";
+import { VerifiableCredentialBuilder } from "@zcloak/vc";
+import { initCrypto } from "@zcloak/crypto";
+
+import { decryptMessage, encryptMessage } from "@zcloak/message";
+
+import { CType } from "@zcloak/ctype/types";
+import { RawCredential, VerifiableCredential } from "@zcloak/vc/types";
+import { Message, MessageType } from "@zcloak/message/types";
+
+import * as qs from "qs";
+import axios from "axios";
+
+// 初始化noble的库与wasm
+await initCrypto();
+
+// 生成Attester Did账户
+const mnemonic = '...';
+const keyring = new Keyring();
+const attester = keys.fromMnemonic(keyring, mnemonic, 'ecdsa');
+
+// 加密与解密message
+const encryptedMsg: Message<MessageType> = 'xxx';
+const decrypted = await decryptMessage(encryptedMsg, attester);
+const message = await encryptMessage("Response_Approve_Attestation", vc, attester, decrypted.sender, decrypted.id);
+
+// 构建vcBuilder
+const raw: RawCredential = 'xxx';
+const ctype: CType = 'xxx';
+const vcBuilder = VerifiableCredentialBuilder.fromRawCredential(raw, ctype)
+    .setExpirationDate(null)
+    .setIssuanceDate(Date.now());
+
+// 构建vc (VerifiableCredential)
+const vc: VerifiableCredential<false> = await vcBuilder.build(attester, false);
+```
+
+### API
 ## Q&A
