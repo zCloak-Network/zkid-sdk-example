@@ -14,6 +14,9 @@ ts-node cred-flow.ts
 ts-node issue-cred.ts
 ```
 
+## ⚠️ Issue Credntial ⚠️
+如果您的需求只是想通过 API向某些 claimer直接发送 credential，您只需参考 `issue-cred.ts`文件
+
 ## 使用向导
 ### Demo 文件说明
 #### cred-flow.ts
