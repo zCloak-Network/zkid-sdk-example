@@ -15,7 +15,8 @@ ts-node issue-cred.ts
 ```
 
 ## ⚠️ Issue Credential ⚠️
-如果您的需求只是想通过 API向某些 claimer直接发送 credential，您只需参考 `issue-cred.ts`文件
+如果您的需求只是想通过 API向某些 claimer直接发送 credential，您只需参考 `issue-cred.ts`文件。
+如果您是一名开发者🧑‍💻，开发教程可参考文章 [Issue Credential API Tutorial](./doc/issueCredentialApiTutorial-zh.md)。
 
 ## 使用向导
 ### Demo 文件说明
