@@ -7,14 +7,8 @@
 **前置条件**
 ```typescript
 await initCrypto();
-
-const mnemonic = '...';
-const keyring = new Keyring();
-const attester = keys.fromMnemonic(keyring, mnemonic, "ecdsa");
 ```
-在前置步骤中，我们需要实现两个功能：
-第一：调用 `initCrypto()`接口，来初始化@noble密码学库与wasm，此步骤为必需，因为我们的 API基于此开发；
-第二：调用 `fromMnemonic(keyring: KeyringInstance, mnemonic: string, signingKeyType?: 'ecdsa' | 'ed25519', index?: number)`接口生成 Did 对象，该 Did对象由助记词帮助生成，因此可以执行后续的签名操作，一般此方法生成的对象为 attester（亦或者后面出现的 issuer）。
+在前置步骤中，需要调用 `initCrypto()`接口，来初始化 @noble密码学库与 wasm，此步骤为必需，因为我们的 API基于此开发。
 
 **Step 0: 根据 claimer DID URL 获取其 DID对象**
 ```typescript
@@ -24,10 +18,26 @@ if (didRes.status !== 200) {
 }
 const holderDidDoc = didRes.data.data.rawData;
 const holder = fromDidDocument(holderDidDoc);
+
+const keyring = new Keyring();
+const json = readDidKeysFile();
+const password = " "; // password to decrypt your DID-keys-file
+const attester = restore(keyring, json, password);
 ```
-在本步骤中，我们主要用到两个方法，
-1. 使用 axios向我们的RESTful API发起 GET请求，请求会返回该 DID URL对应的 DID Document；
-2. 根据第一个方法的返回结果解析出的 DID Document，调用 `fromDidDocument(document: DidDocument, keyring?: KeyringInstance)`接口生成 DID对象。
+在本步骤中，我们用到以下两个API，
+1. `fromDidDocument(document: DidDocument, keyring?: KeyringInstance)`该 API可通过 DID Document恢复 DID，其中 Document的获取需要通过 RESTful API获取；
+2. `restore(keyring: Keyring, json: DidKeys$Json, password: string)`该 API旨在通过 DID-keys-file来恢复 DID，需要注意一点：password参数为创建 DID时的密码，正确的使用该密码才可以解密 DID-keys-file并恢复 DID。
+
+除了使用上述方法恢复 DID外，我们还提供了通过助记词来恢复 DID，具体接口为：`fromMnemonic(keyring: KeyringInstance, mnemonic: string, signingKeyType?: 'ecdsa' | 'ed25519', index?: number)`。
+
+```typescript
+import { keys } from "@zcloak/did";
+import { Keyring } from "@zcloak/keyring";
+
+const keyring = new Keyring();
+const mnemonic = 'xxx';
+const attester = keys.fromMnemonic(keyring, mnemonic, "ecdsa");
+```
 
 **Step 1: 根据 cType hash值获取 CType对象**
 ```typescript

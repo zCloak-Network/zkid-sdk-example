@@ -1,0 +1,63 @@
+{
+    "didUrl": "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7",
+    "version": "1",
+    "identifierKey": {
+        "encoded": "mMVa8jH3k2nQ4vUPI8aM+m9+c9qcZjTkAUP8XvRf2efcAgAAAAQAAAAgAAABFMQvOviZ2951WpLQF1n7t8gWVxOB7/gv74csu/HeW4ZAoOVzu3s3uBPWRYxoTraSE/ymZNE127Cf53kIkEQSA4Y37eSha+/39NHwXuih8TU70nOq55EcxspdwuwkEYAUML2P4pR2msWNlgS7Xw0xPamh8zuAToy/GhK5uZK4=",
+        "encoding": {
+            "content": [
+                "pkcs8",
+                "ecdsa"
+            ],
+            "type": [
+                "scrypt"
+            ],
+            "version": "1"
+        },
+        "publicKey": "mA2loMbH+uBeo58IhC2crE9/uDnA0Zd9/0VPqZFhsPDkx"
+    },
+    "keys": [
+        {
+            "encoded": "mXPxQ0W3KGLrxdGJFMPZ47EXE0tKssSvoc3Lop3OFDNgAgAAAAQAAAAgAAACDPUYalWlDnJQA4yVxf38b94uRGmLWSoMbi+fL0HEjVOCndZvGRKyrP/vKYOINV8NoMB+TtUGopIeVKr2QlJoG43+YGfiC4RoKzUYG69li4BDrlLKam9/LOaHPKg0WoY8aBicLL+rHSXgwSeBNv0evUKzucNLd5EkjvCZjFUk=",
+            "encoding": {
+                "content": [
+                    "pkcs8",
+                    "ecdsa"
+                ],
+                "type": [
+                    "scrypt"
+                ],
+                "version": "1"
+            },
+            "publicKey": "mAwDak0W9GSxZ+bAqK543Cf0YOV+QlKUR74ihZkY+WatM"
+        },
+        {
+            "encoded": "mu8Hbes9HGe6p8pgvu8ci7GNHT1V5hVJF+pVhJAiJPPsAgAAAAQAAAAgAAADIjPzCU9y/Wowbw1tVLTmOxJ+7wEyeS5nMw6FHEqZ1DK0XcxN3C5LhVYsESJzHOOdRaPyLh9GOiMD2M861R5IN7aZ+p87ouVH9HuW8vtmUiH6Wwkf471AAwMAAtwpwE/AgfUS5rgUlvk/SgzmBSZAQdJV5PyZdfTWl/ceVbw==",
+            "encoding": {
+                "content": [
+                    "pkcs8",
+                    "x25519"
+                ],
+                "type": [
+                    "scrypt"
+                ],
+                "version": "1"
+            },
+            "publicKey": "m1jNDneY5DEn75S9oow9QSN4ie6wTYyMBPgCbrszbfSs="
+        }
+    ],
+    "authentication": [
+        "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-0"
+    ],
+    "assertionMethod": [
+        "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-0"
+    ],
+    "keyAgreement": [
+        "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-1"
+    ],
+    "capabilityInvocation": [
+        "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-0"
+    ],
+    "capabilityDelegation": [
+        "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-0"
+    ]
+}
