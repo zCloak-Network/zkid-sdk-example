@@ -60,20 +60,20 @@ const raw = new Raw({
     },
     owner: holderDidUrl,
     ctype: ctype,
-    hashType: "Blake3",
+    hashType: "RescuePrimeOptimized",
 });
 ```
 在本步骤中，我们构建了一个 Raw对象，该对象用于后续构建 RawCredential使用。下面解释一下各个参数：
 - contents: 对应 ctype构建时要求用户填入的字段
 - owner: claimer，接收该 credential的用户
 - ctype: 对应的 ctype对象
-- hashType: 加密算法，默认为 Blake3
+- hashType: 加密算法类型，此处选择 RescuePrimeOptimized（我们还支持 Blake2、Blake3、Keccak256等加密算法）
 
 **Step 3: 构建 Raw Credential**
 ```typescript
 const rawCredential: RawCredential = raw.toRawCredential("Keccak256");
 ```
-在这一步中，我们基于上一步生成的 Raw对象，调用 `toRawCredential(digestHashType?: HashType)`接口生成 Raw Credential，这一步用到的加密算法默认为 keccak256。
+在这一步中，我们基于上一步生成的 Raw对象，调用 `toRawCredential(digestHashType?: HashType)`接口生成 Raw Credential，这一步用到的加密算法默认为 Keccak256（同时我们还支持其他加密算法，与构建 Raw时可用的加密算法一致）。
 
 **Step 4: 构建 vcBuilder**
 ```typescript
