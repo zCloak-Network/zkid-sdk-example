@@ -42,11 +42,7 @@ const issue = async () => {
   console.log("initCrypto for wasm...");
 
   // step0: get holder and attester Did obj
-  const didRes = await axios.get(`${base_url}/did/${holderDidUrl}`);
-  if (didRes.status !== 200) {
-    throw new Error(`get ${holderDidUrl} did document failed`);
-  }
-  const holderDidDoc = didRes.data.data.rawData;
+  const holderDidDoc = await resolver.resolve(holderDidUrl);
   const holder = fromDidDocument(holderDidDoc);
 
   const keyring = new Keyring();
