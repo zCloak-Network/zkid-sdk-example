@@ -14,6 +14,7 @@ import { initCrypto } from "@zcloak/crypto";
 import { DidUrl } from "@zcloak/did-resolver/types";
 import { CType } from "@zcloak/ctype/types";
 import { fromDidDocument } from "@zcloak/did/did/helpers";
+import { ArweaveDidResolver } from "@zcloak/did-resolver";
 
 dotenv.config();
 
@@ -21,6 +22,11 @@ const base_url = process.env.BASE_URL as string;
 const ctypeHash = process.env.CTYPEHASH as string;
 const holderDidUrl: DidUrl =
   "did:zk:0x2808e410610ae6077c6291CF3582Be5EDd2023cc";
+
+// Indicating Enviroment resolver
+const resolver = new ArweaveDidResolver({
+  server: `${base_url}`,
+});
 
 const readDidKeysFile = () => {
   const attesterKeysFile = fs.readFileSync(
@@ -91,7 +97,9 @@ const issue = async () => {
     "Send_issuedVC",
     vc,
     attester,
-    holder.getKeyUrl("keyAgreement")
+    holder.getKeyUrl("keyAgreement"),
+    undefined,
+    resolver
   );
 
   // step7: send encrypted message to server
