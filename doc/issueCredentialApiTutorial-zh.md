@@ -7,16 +7,19 @@
 **前置条件**
 ```typescript
 await initCrypto();
+
+const resolver = new ArweaveDidResolver({
+  server: `${base_url}`,
+});
 ```
-在前置步骤中，需要调用 `initCrypto()`接口，来初始化 @noble密码学库与 wasm，此步骤为必需，因为我们的 API基于此开发。
+在前置步骤中，我们主要进行两个操作：
+1. 调用 `initCrypto()`接口，初始化 @noble密码学库与 wasm，此步骤为必需，因为我们的 API基于此开发；
+2. 生成 resolver，resolver指定了具体的环境，其中 `server`为正式环境或者测试环境的 URL，通过 resolver，可以解析 DID或者通过给定的 DID URL来获取对应的 DID Document。
+注意⚠️：对于将 resolver作为参数的 API，开发者应当在使用中明确指定，特别是当您在我们的开发环境中进行测试时。这是因为我们的 resolver默认连接生产环境，如果您没有指定 resolver，则可能会出现 DID Method找不到等情况。
 
 **Step 0: 根据 claimer DID URL 获取其 DID对象**
 ```typescript
-const didRes = await axios.get(`${base_url}/did/${holderDidUrl}`);
-if (didRes.status !== 200) {
-    throw new Error(`get ${holderDidUrl} did document failed`);
-}
-const holderDidDoc = didRes.data.data.rawData;
+const holderDidDoc = await resolver.resolve(holderDidUrl);
 const holder = fromDidDocument(holderDidDoc);
 
 const keyring = new Keyring();
@@ -25,7 +28,7 @@ const password = " "; // password to decrypt your DID-keys-file
 const attester = restore(keyring, json, password);
 ```
 在本步骤中，我们用到以下两个API，
-1. `fromDidDocument(document: DidDocument, keyring?: KeyringInstance)`该 API可通过 DID Document恢复 DID，其中 Document的获取需要通过 RESTful API获取；
+1. `fromDidDocument(document: DidDocument, keyring?: KeyringInstance)`该 API可通过 DID Document恢复 DID，其中 Document的获取通过调用接口 `resoler.resolve(didUrl: string)`;
 2. `restore(keyring: Keyring, json: DidKeys$Json, password: string)`该 API旨在通过 DID-keys-file来恢复 DID，需要注意一点：password参数为创建 DID时的密码，正确的使用该密码才可以解密 DID-keys-file并恢复 DID。
 
 除了使用上述方法恢复 DID外，我们还提供了通过助记词来恢复 DID，具体接口为：`fromMnemonic(keyring: KeyringInstance, mnemonic: string, signingKeyType?: 'ecdsa' | 'ed25519', index?: number)`。
@@ -104,14 +107,17 @@ const message = await encryptMessage(
     "Send_issuedVC",
     vc,
     attester,
-    holder.getKeyUrl("keyAgreement")
+    holder.getKeyUrl("keyAgreement"),
+    undefined,
+    resolver
   );
 ```
 在该步骤中，我们使用 `encryptMessage<T extends MessageType>(type: T, data: MessageData[T], sender: IDidKeyring, receiverUrl: DidUrl, reply?: string, resolver?: DidResolver)`接口生成加密信息，其中在 issue credential过程中会用到以下几个参数：
 - type: 消息类型，issue 对应的消息类型为 “Send_issuedVC”；
 - MessageData: 消息数据，这里为VC；
 - sender: issuer，或者前面构建的 attester；
-- receiverUrl: 用户 DID对应的 keyAgreement类型的 key，该 key在此处用于加密 MessageData。
+- receiverUrl: 用户 DID对应的 keyAgreement类型的 key，该 key在此处用于加密 MessageData；
+- resolver: 环境 DID resolver
 
 **Step 7: 发送加密后的 message至服务器**
 ```typescript
