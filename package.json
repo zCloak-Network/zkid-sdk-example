@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ctype": "ts-node ./src/ctype/createCtype.ts",
     "claim": "ts-node ./src/claim-attest/claim.ts",
+    "attest": "ts-node ./src/claim-attest/attest.ts",
     "issue": "ts-node ./src/issue/issue.ts"
   },
   "keywords": [],
