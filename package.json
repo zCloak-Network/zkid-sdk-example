@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "ctype": "ts-node ./src/ctype/createCtype.ts",
     "claim": "ts-node ./src/claim-attest/claim.ts",
-    "ctype": "ts-node ./src/ctype/createCtype.ts"
+    "issue": "ts-node ./src/issue/issue.ts"
   },
   "keywords": [],
   "author": "",

@@ -1,40 +1,27 @@
-import axios from "axios";
-import * as fs from "fs";
-import * as qs from "qs";
-import * as path from "path";
-import * as dotenv from "dotenv";
-import { VerifiableCredential } from "@zcloak/vc/types";
-import { Raw, VerifiableCredentialBuilder } from "@zcloak/vc";
-import { RawCredential } from "@zcloak/vc/types";
+import path from "path";
+import dotenv from "dotenv";
 import { Keyring } from "@zcloak/keyring";
 import { restore } from "@zcloak/did/keys";
-import { DidKeys$Json } from "@zcloak/did/keys/types";
-import { encryptMessage } from "@zcloak/message";
 import { initCrypto } from "@zcloak/crypto";
-import { DidUrl } from "@zcloak/did-resolver/types";
-import { CType } from "@zcloak/ctype/types";
+import { encryptMessage } from "@zcloak/message";
+import { Raw, VerifiableCredentialBuilder } from "@zcloak/vc";
+
+import type { CType } from "@zcloak/ctype/types";
+import type { RawCredential } from "@zcloak/vc/types";
+import type { DidUrl } from "@zcloak/did-resolver/types";
+import type { VerifiableCredential } from "@zcloak/vc/types";
+
+import { resolver } from "../utils/resolverHelper";
+import { readDidKeysFile } from "../utils/didHelper";
+import { getCtypeFromHash } from "../utils/ctypeHelper";
 import { fromDidDocument } from "@zcloak/did/did/helpers";
-import { ArweaveDidResolver } from "@zcloak/did-resolver";
+import { sendMessage2Server } from "../utils/messageHelper";
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-const base_url = process.env.BASE_URL as string;
 const ctypeHash = process.env.CTYPEHASH as string;
 const holderDidUrl: DidUrl =
-  "did:zk:0x2808e410610ae6077c6291CF3582Be5EDd2023cc";
-
-// Indicating Enviroment resolver
-const resolver = new ArweaveDidResolver({
-  server: `${base_url}`,
-});
-
-const readDidKeysFile = () => {
-  const attesterKeysFile = fs.readFileSync(
-    `${path.join(__dirname, "/attester-DID-keys-file.json")}`,
-    { encoding: "utf-8" }
-  );
-  return JSON.parse(attesterKeysFile) as DidKeys$Json;
-};
+  "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
 
 const issue = async () => {
   // initCrypto for wasm
@@ -42,22 +29,20 @@ const issue = async () => {
   console.log("initCrypto for wasm...");
 
   // step0: get holder and attester Did obj
+  // get holder DID from DidDocument
+  // we only need holders's public key to encrypt message
   const holderDidDoc = await resolver.resolve(holderDidUrl);
   const holder = fromDidDocument(holderDidDoc);
 
+  // get attester DID from DID-Keys-file
+  // we need attester's private key to sign signature when deciding to issue credential
   const keyring = new Keyring();
   const json = readDidKeysFile();
-  const password = " "; // password to decrypt your DID-keys-file
+  const password = "12345678"; // password to decrypt your DID-keys-file
   const attester = restore(keyring, json, password);
 
   // step1: get ctype
-  const res = await axios.get(
-    `${base_url}/ctype?${qs.stringify({ id: ctypeHash })}`
-  );
-  if (res.status !== 200) {
-    throw new Error(`ctype query failed ${ctypeHash}`);
-  }
-  const ctype: CType = res.data.data[0].rawData;
+  const ctype: CType = await getCtypeFromHash(ctypeHash);
 
   // step2: build raw
   const raw = new Raw({
@@ -99,17 +84,7 @@ const issue = async () => {
   );
 
   // step7: send encrypted message to server
-  const sendRes = await axios.post(
-    `${base_url}/wxBlockchainEvent/message`,
-    message
-  );
-  if (sendRes.status === 200) {
-    console.log(
-      `SUCCESS: send encrypted message to server, issue a credential to holder directly.`
-    );
-  } else {
-    console.log(`send encrypted message response status: ${sendRes.status}`);
-  }
+  await sendMessage2Server(message);
 };
 
 issue()
