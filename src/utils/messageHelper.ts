@@ -2,6 +2,8 @@ import qs from "qs";
 import axios from "axios";
 import { Did } from "@zcloak/did";
 
+import type { Message, MessageType } from "@zcloak/message/types";
+
 export async function sendMessage2Server(
   message: any,
   url = "https://did-service.zkid.app"
@@ -28,5 +30,8 @@ export async function getMessage(
     reply: reply,
   });
   const res = await axios.get(`${url}/message?${param}`);
-  console.dir(res);
+
+  return res.data.data.map((value: any) => value.rawData) as Array<
+    Message<MessageType>
+  >;
 }
