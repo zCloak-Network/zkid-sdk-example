@@ -10,44 +10,18 @@ Hi👋，该仓库向您展示了如何使用我们的SDK来验证用户的claim
 git clone https://github.com/zCloak-Network/credential-api-example.git
 cd credential-api-example/
 npm install
-ts-node cred-flow.ts
-ts-node issue-cred.ts
+
+npm run ctype
+npm run claim
+npm run attest
+npm run issue
 ```
 
-## ⚠️ Issue Credential ⚠️
-如果您的需求只是通过 API向 claimer直接发送 credential，您只需参考 `issue-cred.ts`文件。
+## ⚠️ Issue Verifiable Credential ⚠️
+如果您的需求只是使用 SDK向用户直接发送 VC（即 issue模式），那么您只需参考 `/src/issue/issue.ts`文件。
 👉开发教程可参考文章 [Issue Credential API Tutorial](./doc/issueCredentialApiTutorial-zh.md)。
 
 ## 使用向导
-### Demo 文件说明
-#### cred-flow.ts
-脚本 `cred-flow.ts`向我们展示了如何对一个已经被创建过的claim进行验证，前提是用户已经在我们的 [credential平台](https://cred.zkid.app)创建过claim。
-通过我们的脚本文件，提供 `receiver`, `sender` 以及 `msgType`即可对查询到的claim进行验证并发放credential，即如下代码部分：
-```typescript
-const params = [
-  {
-    receiver: "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-1",
-    sender: "did:zk:0xEdfdf6BCaa1A4c5Ed47f062Bbb51220A1001d2f7#key-1",
-    msgType: "Request_Attestation",
-  },
-  {
-    receiver: "did:zk:0x4867c2Dfa7Aa14459c843d69220623cA97B652d7#key-1",
-    sender: "did:zk:0x2808e410610ae6077c6291CF3582Be5EDd2023cc#key-1",
-    msgType: "Request_Attestation",
-  }
-];
-```
-在上面的代码中，我们对两个user（即sender）进行查询，通过运行脚本文件，我们可以得到下面的输出结果：
-![](./images/res-cred-flow.png)
-
-通过脚本的输出，我们看到sender为 `did:zk:0xEdfdf6BCaa1A4c5Ed47f062Bbb51220A1001d2f7#key-1`的用户只进行过一次创建claim的操作，
-对其验证并发放credential可得到输出信息为SUCCESS_0.0，
-
-同样，sender为 `did:zk:0x2808e410610ae6077c6291CF3582Be5EDd2023cc#key-1`的用户创建了两个claim，操作完成后得到的输出信息对应为SUCCESS_1.0与SUCCESS_1.1。
-
-#### issue-cred.ts
-脚本 `issue-cred.ts`向我们展示了如何向DID用户直接发放credential，通过该脚本无需用户提前创造claim即可将Attester自定义的任意credential
-发放给该用户。
 
 ### 使用
 我们支持 浏览器，node.js:
@@ -92,5 +66,4 @@ const vcBuilder = VerifiableCredentialBuilder.fromRawCredential(raw, ctype)
 const vc: VerifiableCredential<false> = await vcBuilder.build(attester, false);
 ```
 
-### API
 ## Q&A

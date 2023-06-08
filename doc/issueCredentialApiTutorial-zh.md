@@ -24,7 +24,7 @@ const holder = fromDidDocument(holderDidDoc);
 
 const keyring = new Keyring();
 const json = readDidKeysFile();
-const password = " "; // password to decrypt your DID-keys-file
+const password = "12345678"; // password to decrypt your DID-keys-file
 const attester = restore(keyring, json, password);
 ```
 在本步骤中，我们用到以下两个API，
