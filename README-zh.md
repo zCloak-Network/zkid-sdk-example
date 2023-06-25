@@ -27,10 +27,10 @@ npm run issue
 目前所有的 Demo文件都已经迁移至 src文件夹中，以下将根据文件夹的归类来分别介绍各个主要功能模块。
 
 **claim-attest**
-在 claim-attest文件夹下，包含了 claim.ts脚本与 attest.ts脚本，该文件夹中的脚本文件用于展示签发 VC中的 request模式，即 claimer发起请求，attester批准/拒绝请求，attester批准请求后签发 VC。
+在 claim-attest文件夹下，包含了 claim.ts脚本与 attest.ts脚本，该文件夹中的脚本文件用于展示签发 VC的 request模式，即 claimer发起请求，attester批准/拒绝请求，attester批准请求后签发 VC。
 
 **issue**
-在 issue文件夹下，只包含一个 issue.ts脚本文件，该文件用于展示签发 VC中的 issue模式，即 attester直接向指定用户签发一个 VC，用户不需要提前请求。
+在 issue文件夹下，只包含一个 issue.ts脚本文件，该文件用于展示签发 VC的 issue模式，即 attester直接向指定用户签发一个 VC，用户不需要提前请求。
 
 **ctype**
 在 ctype文件夹中，只包含一个 createCtype.ts脚本文件，该文件用于展示如何创建一个 ctype。
