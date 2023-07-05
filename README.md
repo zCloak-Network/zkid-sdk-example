@@ -8,6 +8,7 @@ Ready for it?🚀 Please read the README.md first.
 ## Quick Use
 
 Make sure using the latest version of SDK: `npm update`
+
 Recommended node version: **v18.16.1 LTS**
 
 ```bash
