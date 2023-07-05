@@ -7,12 +7,16 @@ Ready for it?🚀 Please read the README.md first.
 
 ## Quick Use
 
+Make sure using the latest version of SDK: `npm update`
+Recommended node version: **v18.16.1 LTS**
+
 ```bash
 git clone https://github.com/zCloak-Network/credential-api-example.git
 cd credential-api-example/
 npm install
-ts-node cred-flow.ts
-ts-node issue-cred.ts
-```
 
-## Q&A
+npm run ctype
+npm run claim
+npm run attest
+npm run issue
+```
