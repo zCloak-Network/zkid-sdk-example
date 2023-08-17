@@ -1,22 +1,17 @@
-import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
-import { keys } from "@zcloak/did";
 import { vpVerify } from "@zcloak/verify";
 import { Keyring } from "@zcloak/keyring";
 import { restore } from "@zcloak/did/keys";
-import { initCrypto, randomAsHex } from "@zcloak/crypto";
-import { VerifiablePresentationBuilder } from "@zcloak/vc";
-import { encryptMessage, decryptMessage } from "@zcloak/message";
+import { initCrypto } from "@zcloak/crypto";
+import { decryptMessage } from "@zcloak/message";
 
 import type { DidUrl } from "@zcloak/did-resolver/types";
-import type { VerifiableCredential } from "@zcloak/vc/types";
 
 import { resolver } from "../utils/resolverHelper";
 import { getMessage } from "../utils/messageHelper";
 import { readDidKeysFile } from "../utils/didHelper";
 import { fromDidDocument } from "@zcloak/did/did/helpers";
-import { sendMessage2Server } from "../utils/messageHelper";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
@@ -40,18 +35,14 @@ const responseVP = async () => {
   const verifier = restore(keyring, json, password);
 
   // step1: get message
-  const serverMsg = await getMessage(holder, verifier, "Send_VP");
+  const serverMsgOrigin = await getMessage(holder, verifier, "Send_VP");
+  const serverMsg = serverMsgOrigin.sort((a, b) => b.createTime - a.createTime);
 
   // step2: decrypt claim message
-  // serverMsg array is just for demo use, the details should be based on the actual situation
-  const decrypted = await decryptMessage(
-    serverMsg[serverMsg.length - 1],
-    verifier
-  );
+  const decrypted = await decryptMessage(serverMsg[0], verifier);
 
   // step3: verify vp
   const result = await vpVerify(decrypted.data);
-  console.log(`vp id: ${decrypted.data.id}`);
   console.log(`verify vp result: ${result}`);
 };
 
