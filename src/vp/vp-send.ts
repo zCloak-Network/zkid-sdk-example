@@ -38,9 +38,12 @@ const sendVP = async () => {
   const verifier = fromDidDocument(verifierDoc);
 
   // step1: get vc
-  const vcStr = fs.readFileSync("../../vc-example.json", {
-    encoding: "utf-8",
-  });
+  const vcStr = fs.readFileSync(
+    path.resolve(__dirname, "../../vc-example.json"),
+    {
+      encoding: "utf-8",
+    }
+  );
   const vc = JSON.parse(vcStr) as VerifiableCredential<false>;
 
   // step2: build vp builder
