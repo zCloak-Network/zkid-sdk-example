@@ -6,6 +6,8 @@ Hi👋，各位开发者🧑‍💻，本教程将向你展示如何使用 SDK�
 
 ## 快速使用
 
+请确保使用最新兼容版本，您可以使用 `npm update` 命令来升级依赖。
+
 ```bash
 git clone https://github.com/zCloak-Network/credential-api-example.git
 cd credential-api-example/
@@ -15,6 +17,8 @@ npm run ctype
 npm run claim
 npm run attest
 npm run issue
+npm run vp-send
+npm run vp-send-verify
 ```
 
 ## ⚠️ Issue Verifiable Credential ⚠️
