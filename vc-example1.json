@@ -1,0 +1,39 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+    ],
+    "version": "1",
+    "ctype": "0xca9b3d79ca4326d0c05caf60d9b6a0a405bacc2fabf61c230f3f2cc0addd4593",
+    "issuanceDate": 1694418981534,
+    "credentialSubject": {
+        "name": "vss-claimer",
+        "age": 23,
+        "company_name": "Test"
+    },
+    "issuer": "did:zk:0xB16FEfFaED0630F4C580a58ae0349C68609A6fDc",
+    "holder": "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea",
+    "hasher": [
+        "RescuePrimeOptimized",
+        "Keccak256"
+    ],
+    "digest": "0x7d86dfe14ba93760b806177480cb8a18d1f687be36422b7a2dfb73b19b0038c8",
+    "proof": [
+        {
+            "type": "EcdsaSecp256k1SignatureEip191",
+            "created": 1694418981573,
+            "verificationMethod": "did:zk:0xB16FEfFaED0630F4C580a58ae0349C68609A6fDc#key-0",
+            "proofPurpose": "assertionMethod",
+            "proofValue": "z7ezWBY7G3iuGKuP6tBufnMAfTgEZnE8R5mPx3YXTrE2wL6krhkt1kFTe4zxYo9qhbK2B6oUaBnx3JMYs6uaoFjdeX"
+        }
+    ],
+    "credentialSubjectHashes": [
+        "0x66b4589a4bf951944a882730005333bbcf2f3235bfc309a344d8e83d29914a10",
+        "0xc8efb557aaca9fca5de49378183b7feda4b3d2ce493a55b20121d23630569c9d",
+        "0x43e8a7236938f34252e62c6396e6e88d37a549d99b8ff126a066260ed25b535c"
+    ],
+    "credentialSubjectNonceMap": {
+        "0x8e60375533557ac1f3235750024e04c194c4b7732b81a6a92d033a8167b85763": "0xc70dc4d7a3746e3e571a3556e5c1d5ea40044ac85e495d3462a56a726164ad99",
+        "0x2d4e0ae8a576732fa15b0bdb0c7d7c36284657a18fdae95ee32439383dfe720b": "0x5307eb27c71ceb8f1bffd455c29cc54f8c052a1492b235f53624c5c67c60506a",
+        "0x121af31876dce595e939b017837a144c953fe633f132f99e36e0f66a486dd134": "0xe3521fa9c5d23e78e5fe27654a9e44f589ee0a3a4499ce3a9e995f8e17796684"
+    }
+}
