@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "create-did": "ts-node ./src/did/createDID.ts",
     "ctype": "ts-node ./src/ctype/createCtype.ts",
     "claim": "ts-node ./src/claim-attest/claim.ts",
     "attest": "ts-node ./src/claim-attest/attest.ts",
