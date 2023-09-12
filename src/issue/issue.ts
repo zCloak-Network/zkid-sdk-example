@@ -45,6 +45,9 @@ const issue = async () => {
   const ctype: CType = await getCtypeFromHash(ctypeHash);
 
   // step2: build raw
+  // Note: If the use case for VC does not involve zk computation,
+  //       it is recommended to use the Keccak256 hashing method for Raw hashType.
+  //       Otherwise, it is advisable to use the RescuePrimeOptimized method.
   const raw = new Raw({
     contents: {
       id: 9870456,
@@ -52,7 +55,7 @@ const issue = async () => {
     },
     owner: holderDidUrl,
     ctype: ctype,
-    hashType: "RescuePrimeOptimized",
+    hashType: "Keccak256",
   });
 
   // step3: build rawCredential from raw
