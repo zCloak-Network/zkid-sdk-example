@@ -37,11 +37,16 @@ const holderDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
   const attester = keys.fromMnemonic(keyring, mnemonic, "ecdsa");
 
   // Step 0: get message
-  const serverMsg = await getMessage(holder, attester, "Request_Attestation");
+  const serverMsgOrigin = await getMessage(
+    holder,
+    attester,
+    "Request_Attestation"
+  );
+  const serverMsg = serverMsgOrigin.sort((a, b) => b.createTime - a.createTime);
 
   // Step 1: decrypt claim message
   // serverMsg array is just for demo use, the details should be based on the actual situation
-  const decrypted = await decryptMessage(serverMsg[2], attester);
+  const decrypted = await decryptMessage(serverMsg[0], attester);
 
   // Step 2: get rawCredential from decrypt return value
   const rawCredential: RawCredential = decrypted.data;
