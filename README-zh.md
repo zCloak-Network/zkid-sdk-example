@@ -1,4 +1,4 @@
-# Credential-API 使用说明
+# Zkid-SDK 使用说明
 
 Hi👋，各位开发者🧑‍💻，本教程将向你展示如何使用 SDK来完成 credential分发的 **request模式**（claimer发起 attestation请求，attester批准或拒绝请求）与 **issue模式**（attester 直接向指定 claimer发送 VC）。
 
@@ -9,8 +9,8 @@ Hi👋，各位开发者🧑‍💻，本教程将向你展示如何使用 SDK�
 请确保使用最新兼容版本，您可以使用 `npm update` 命令来升级依赖。
 
 ```bash
-git clone https://github.com/zCloak-Network/credential-api-example.git
-cd credential-api-example/
+git clone https://github.com/zCloak-Network/zkid-sdk-example.git
+cd zkid-sdk-example/
 npm install
 
 npm run ctype
@@ -36,9 +36,7 @@ npm run vp-send-verify
 在 issue文件夹下，只包含一个 issue.ts脚本文件，该文件用于展示签发 VC的 issue模式，即 attester直接向指定用户签发一个 VC，用户不需要提前请求。
 
 **ctype**
-在 ctype文件夹中，只包含一个 createCtype.ts脚本文件，该文件用于展示如何创建一个 ctype。
-
-⚠️：由于在 claim-attest与 ctype中涉及到的交互接口处于升级阶段，所以 Demo样例文件只用于展示 SDK的具体使用方法，如果想体验完整的流程，建议使用 issue模式。
+在 ctype文件夹中，只包含一个 createCtype.ts脚本文件，该文件用于展示如何创建一个 ctype。建议各位开发者使用 [credential 平台](https://cred.zkid.app)创建 ctype。
 
 ### 📨 Issue Credential API Tutorial
 
@@ -124,14 +122,14 @@ const raw = new Raw({
     },
     owner: holderDidUrl,
     ctype: ctype,
-    hashType: "RescuePrimeOptimized",
+    hashType: "Keccak256",
 });
 ```
 在本步骤中，我们构建了一个 Raw对象，该对象用于后续构建 RawCredential使用。下面解释一下各个参数：
 - contents: 对应 ctype构建时要求用户填入的字段
 - owner: claimer，接收该 credential的用户
 - ctype: 对应的 ctype对象
-- hashType: 加密算法类型，此处选择 RescuePrimeOptimized（我们还支持 Blake2、Blake3、Keccak256等加密算法）
+- hashType: 加密算法类型，此处选择 Keccak256（我们还支持 Blake2、Blake3、RescuePrimeOptimized等加密算法。注意：考虑到 Keccak256的哈希效率在链上最高，因此如果您的 vc使用场景不包括 zk计算，那么建议使用 Keccak256作为构建 Raw时的哈希，否则使用 RescuePrimeOptimized哈希。）
 
 **Step 3: 构建 Raw Credential**
 ```typescript

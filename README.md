@@ -1,4 +1,4 @@
-# Credential-API-Example
+# Zkid-SDK-Example
 
 Hi👋, this repo shows you how to use our SDK to attest user's claim or directly issue credential in the [credential platform](https://cred.zkid.app) of zkID.app.
 
@@ -12,8 +12,8 @@ Make sure using the latest version of SDK: `npm update`
 Recommended node version: **v18.16.1 LTS**
 
 ```bash
-git clone https://github.com/zCloak-Network/credential-api-example.git
-cd credential-api-example/
+git clone https://github.com/zCloak-Network/zkid-sdk-example.git
+cd zkid-sdk-example/
 npm install
 
 npm run ctype
