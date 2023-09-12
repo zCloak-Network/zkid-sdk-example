@@ -1,4 +1,3 @@
-import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { keys } from "@zcloak/did";
@@ -8,8 +7,8 @@ import { initCrypto, randomAsHex } from "@zcloak/crypto";
 import { VerifiablePresentationBuilder } from "@zcloak/vc";
 
 import type { DidUrl } from "@zcloak/did-resolver/types";
-import type { VerifiableCredential } from "@zcloak/vc/types";
 
+import { getPrivateVC } from "../utils/vcHelper";
 import { resolver } from "../utils/resolverHelper";
 import { fromDidDocument } from "@zcloak/did/did/helpers";
 import { sendMessage2Server } from "../utils/messageHelper";
@@ -38,21 +37,20 @@ const sendVP = async () => {
   const verifier = fromDidDocument(verifierDoc);
 
   // step1: get vc
-  const vcStr = fs.readFileSync(
-    path.resolve(__dirname, "../../vc-example.json"),
-    {
-      encoding: "utf-8",
-    }
-  );
-  const vc = JSON.parse(vcStr) as VerifiableCredential<false>;
+  const vc0 = getPrivateVC("../../vc-example0.json");
+  const vc1 = getPrivateVC("../../vc-example1.json");
 
   // step2: build vp builder
   const vpBuilder = new VerifiablePresentationBuilder(holder);
 
   // step3: generate challange and build vp
+  // note: you can add more vc to build multi type vp
   const challange = randomAsHex();
   const vp = await vpBuilder
-    .addVC(vc, "VP_Digest")
+    .addVC(vc0, "VP")
+    .addVC(vc0, "VP_Digest")
+    .addVC(vc0, "VP_SelectiveDisclosure", ["id"])
+    .addVC(vc1, "VP")
     .build("Keccak256", challange);
 
   // step4: encrypt message
