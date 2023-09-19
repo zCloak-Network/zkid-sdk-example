@@ -11,7 +11,8 @@
     "attest": "ts-node ./src/claim-attest/attest.ts",
     "issue": "ts-node ./src/issue/issue.ts",
     "vp-send": "ts-node ./src/vp/vp-send.ts",
-    "vp-send-verify": "ts-node ./src/vp/vp-send-verify.ts"
+    "vp-send-verify": "ts-node ./src/vp/vp-send-verify.ts",
+    "zkp": "ts-node ./src/zkp/zkp-full-process.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@zcloak/did-resolver": "^1.1.3",
     "@zcloak/keyring": "^1.1.9",
     "@zcloak/message": "^1.0.6",
+    "@zcloak/miden": "^1.2.0",
     "@zcloak/vc": "^1.2.4",
     "@zcloak/verify": "^1.3.11",
     "axios": "^1.3.4",
