@@ -1,0 +1,51 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+    ],
+    "version": "1",
+    "ctype": "0x2a7f86ef72d2a71cd11cfd33fb4e6bc6201d4555592d6cdbc320088b4c269fdf",
+    "issuanceDate": 1695037192630,
+    "credentialSubject": {
+        "SOURCE": "I AM SMART",
+        "CITIZENSHIP": "HK",
+        "EN_NAME": "Jesse Pinkman",
+        "CH_NAME": "李某",
+        "AGE": 23,
+        "IDENTIFICATION_ID": "AD880933(2)",
+        "ISSUER_DATE": 1695029237883
+    },
+    "issuer": "did:zk:0xB16FEfFaED0630F4C580a58ae0349C68609A6fDc",
+    "holder": "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea",
+    "hasher": [
+        "RescuePrimeOptimized",
+        "Keccak256"
+    ],
+    "digest": "0x767890caa3ca87c40f5e901d6ff618544674a0ed9d9a704c81294b95ead8feed",
+    "proof": [
+        {
+            "type": "EcdsaSecp256k1SignatureEip191",
+            "created": 1695037192647,
+            "verificationMethod": "did:zk:0xB16FEfFaED0630F4C580a58ae0349C68609A6fDc#key-0",
+            "proofPurpose": "assertionMethod",
+            "proofValue": "zMTcVKuoZVgGkg9Hp8wxc4QsLC2Sm6AFaSMh5WeDxWmGhYkDV5eLrKyKjrvTrvS1zfXfdXDtGdMugaBjRvMT2beSGF"
+        }
+    ],
+    "credentialSubjectHashes": [
+        "0xd6a6af89a72758969d21dfb70782b6229dacddd3480db9cb1f263a9ac3a3bf74",
+        "0x884b33530545c8a6f2f717b221003ab03acc49c41d64fcab3c9862c809069afb",
+        "0x5cad8961c79441dc1cb373710e7f827d63e250cf764eb20ac8adadd18026bb9f",
+        "0x5cabb3afb29cc86da03a4b580cf8c82c970bd2715ffb9e21cea84b086e68aaf1",
+        "0x3eb3a99f6ed97d4d84d5f64adfbec8acc7e5edb8e9aa3bc46ef988eb99107de4",
+        "0x8a6a599a87adc30dedb4fe3fcd14067ff58ce305d044dcd5b4d1edd6272253e8",
+        "0x3e3c747c1cd533039a40c4fc07d42943cfc51bedcb7b1723db5728039a1692e3"
+    ],
+    "credentialSubjectNonceMap": {
+        "0xcb8bad43e806b95462eb9cc8ddcd3daa5b8dff53346f2899ba028972e8ed4a58": "0x33527d7031e0ded9d792b06856ef023e79de8d6a3343b9e0b7a316ec3ebeae72",
+        "0xe78d4fbb520c2eecf5113affffcb3ed066540dec8ed26acb069c53b4053bb737": "0x07f589cb5ca37838ce431e12956d48044e7ece382ce1163e03b117e440ce3dfa",
+        "0x7795ee5a0e39fde19c398abc1409fd9d831d75b151deb30aae59d78d987b8504": "0xe39e334cca49964e219d814edce9afb7161efbd3cef8f2fcd7c17c571eebf778",
+        "0x11cd7aad860696ff0e13ba90b8f8da24b3a883b15b6655fd0f1ba485571d1c6a": "0x5494a378f00a14a2be5c0b21b85896647facb61a88735bad683c456ec0ec9a06",
+        "0x2d4e0ae8a576732fa15b0bdb0c7d7c36284657a18fdae95ee32439383dfe720b": "0x0a06a97d420ca4a3aca0a2f4594f886db61492a59e993345ea0f91f00a87413e",
+        "0xb43e17d66c8cb521d5d49c5b0dc772d1b76adab4b76cbc8cc0ff51b1afc4bc3a": "0xe54abbccdceaa8fba9c353552ab3e1147605e991f3e9b2a729f8be12eb71d9e2",
+        "0x6b29951d1857bf18e8e0559c69921712de238fb1963e09d758d6b4a99a1195f2": "0x61d785248061501515ff1b7e5c13fdea560d59efde99c01c1b1cc27605633716"
+    }
+}
