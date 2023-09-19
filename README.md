@@ -22,4 +22,5 @@ npm run attest
 npm run issue
 npm run vp-send
 npm run vp-send-verify
+npm run zkp
 ```
