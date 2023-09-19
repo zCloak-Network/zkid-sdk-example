@@ -9,7 +9,9 @@ Let's see how to build it.
 ## step0 Run verifier service
 You have seen there is a binary program called 'verifier' in the /src/zkp folder. This is our verifier service to verify your zk proof. It listens 3000 port and provides a verify API to allow you send proof and verify it.
 
-Using flowing command to run the verifier service.
+Note: Recommend OS is MacOS or Linux
+
+Using the following command to run the verifier service.
 ```bash
 # If you don't have permission to launch program directly, run this first
 chmod +x ./verifier
