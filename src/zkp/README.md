@@ -45,7 +45,7 @@ In this scenario, our program constraints represent the judgment of the fourth c
 Note: Credential content field starts at index 0.
 
 ## step2 Generate secret_input
-Generally speaking, vm needs two inputs, one is public input and other is secret input. The public input is used to initialize vm stack, but we don't use it in this scenaria. The secret input is only known by prover (user) and is used to perform practical calculations.
+Generally speaking, vm needs two inputs, one is public input and other is secret input. The public input is used to initialize vm stack, but we don't use it in this scenario. The secret input is only known by prover (user) and is used to perform practical calculations.
 
 ```typescript
 const cred = fs.readFileSync(
@@ -71,6 +71,40 @@ Build verifier input data object.
 ## step5 Verify whether the entire program was faithfully executed
 Send verify input data to verifier service, it can return two data fields. One is `roothash` and other is  `is_valid`. `roothash` is recoved credential roothash, if the roothash is the same before and after the build, it is a valid credential. `is_valid` field could explain whether the entire program was faithfully executed.
 
-## step6 Judge
+## step6 Verify whether VC is valid
+Before you start at your main business logic, you need to verify user's VC whether is valid. In this section, I will help you better understand how to verify VC in the zkp scenario.
+First, you need to recover digest hash.
+
+```typescript
+const digestPayload: DigestPayload<VerifiableCredentialVersion> = {
+    rootHash: `0x${rootHash}`,
+    holder: holderDidUrl,
+    issuanceDate,
+    expirationDate,
+    ctype: ctypeHash,
+  };
+const digestObj = calcDigest(credentialVersion, digestPayload);
+```
+Note: `rootHash` field of DigestPayload should be recoverd rootHash from zkp verify result at step5.
+
+Second, verify attester signature.
+
+```typescript
+let message: `0x${string}` | Uint8Array;
+if (credentialVersion == "1") {
+  message = signedVCMessage(digestObj.digest, "1");
+} else if (credentialVersion == "0") {
+  message = digestObj.digest;
+} else {
+  console.error(
+    `Wrong credential version, your version is ${credential.version}`
+  );
+  return;
+}
+const res = await proofVerify(message, credential.proof[0]);
+```
+The main logic is `proofVerify()`, this method can verify the proof on the `message`, the proof includes attester's signature and other required data. If you want to read more about it, you can read this [doc](https://zcloak-network.notion.site/Verifiable-Credential-Private-VC-90805b20cbd0480cb86664c27c7b78cb).
+
+## step7 Judge
 Let's get back to our real concerns. In this step you will judge whether greater than or equal to 18 years old. In the zkp result, the `output.stack` array stores your roothash and judgment result, the first four items are roothash, and the fifth item is the result of the judgment, with 1 satisfying the condition and 0 not satisfying it.
 Like this `["2491764550750522191","11331489113581156736","14446766722750100225","14034721822984398472","1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"]`, the fifth item is 1, it presents the selected credential content field is greater than or equal to 18.
