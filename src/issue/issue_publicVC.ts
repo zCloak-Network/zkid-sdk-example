@@ -53,7 +53,6 @@ const holderDidUrl: DidUrl =
   // Note: If the use case for VC does not involve zk computation,
   //       it is recommended to use the Keccak256 hashing method for Raw hashType.
   //       Otherwise, it is advisable to use the RescuePrimeOptimized method.
-  // ATTENTION: using this raw contents (kyc public vc ctype's struct)
   const raw = new Raw({
     contents: {
       kyc_status: 1,
