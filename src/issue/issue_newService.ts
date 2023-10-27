@@ -18,6 +18,8 @@ import { getCtypeFromHash, sendMessage2Server } from "./util";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
+// TODO:
+// 🚧 building...
 const ctypeHash =
   "0xeb798a4e225ca0c841d07b86453af634a4ace4fb1446b2283da4b4896846daa2";
 // const ctypeHash =
