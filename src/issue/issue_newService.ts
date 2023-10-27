@@ -18,14 +18,11 @@ import { getCtypeFromHash, sendMessage2Server } from "./util";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-// TODO:
-// 🚧 building...
 const ctypeHash =
-  "0xeb798a4e225ca0c841d07b86453af634a4ace4fb1446b2283da4b4896846daa2";
-// const ctypeHash =
-//   "0x401bac845a9b0115ae41ffb7fa923430df1484caec27f708a4cbadcdefe2899c";
+  "0x1c4f0b68dbe7a0345d4f2035e757b5351d4a0569744b487b24e527e5e54084aa";
+
 const holderDidUrl: DidUrl =
-  "did:zk:0x89590750403758a34A83248A3EAA27112aee96DF";
+  "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
 
 (async () => {
   // initCrypto for wasm
@@ -54,8 +51,13 @@ const holderDidUrl: DidUrl =
   //       Otherwise, it is advisable to use the RescuePrimeOptimized method.
   const raw = new Raw({
     contents: {
-      Name: "vss-demo",
-      Role: "master",
+      LAST_NAME: "Price",
+      FIRST_NAME: "John",
+      ID_NUMBER: "308451",
+      SEX: "F",
+      DATE_OF_BIRTH: 814733300846,
+      "COUNTRY/REGION": 840,
+      EXPIRY_DATE: 2187456500567,
     },
     owner: holderDidUrl,
     ctype: ctype,
@@ -66,11 +68,12 @@ const holderDidUrl: DidUrl =
   const rawCredential: RawCredential = raw.toRawCredential("Keccak256");
 
   // step4: build a vcBuilder by using rawCredential and ctype
+  // ATTENTION: set expirarion date with OCR result (example time is 2039/04/27 02/48/20 in milliseconds)
   const vcBuilder = VerifiableCredentialBuilder.fromRawCredential(
     rawCredential,
     ctype
   )
-    .setExpirationDate(null)
+    .setExpirationDate(2187456500567)
     .setIssuanceDate(Date.now());
 
   // step5: build a vc
@@ -91,5 +94,5 @@ const holderDidUrl: DidUrl =
   );
 
   // step7: send encrypted message to server
-  await sendMessage2Server(56, message);
+  await sendMessage2Server(58, message);
 })();

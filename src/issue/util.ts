@@ -4,8 +4,8 @@ import axios from "axios";
 import type { CType } from "@zcloak/ctype/types";
 import type { VerifiableCredential } from "@zcloak/vc/types";
 
-// TODO: only dev enviroment can run now
-const baseUrl = "https://card-service.zkid.xyz";
+// ATTENTION: if you run issue_publicVC script, please using https://card-service.zkid.xyz
+const baseUrl = "https://card-service.zkid.app";
 
 export const getCtypeFromHash = async (
   id: string | undefined,
