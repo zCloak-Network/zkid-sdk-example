@@ -4,7 +4,8 @@ import axios from "axios";
 import type { CType } from "@zcloak/ctype/types";
 import type { VerifiableCredential } from "@zcloak/vc/types";
 
-const baseUrl = "https://card-service.zkid.app";
+// TODO: only dev enviroment can run now
+const baseUrl = "https://card-service.zkid.xyz";
 
 export const getCtypeFromHash = async (
   id: string | undefined,
@@ -47,7 +48,6 @@ export const sendKycRecord = async (
   const res = await axios.post(`${url}/api/kyc/record/callback/save`, publicVC);
   if (res.status === 200) {
     console.log(`SUCCESS: send public VC to server`);
-    console.log(res.data);
   } else {
     console.log(`send encrypted message response status: ${res.status}`);
   }
