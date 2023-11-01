@@ -11,7 +11,8 @@
     "attest": "ts-node ./src/claim-attest/attest.ts",
     "issue": "ts-node ./src/issue/issue.ts",
     "vp-send": "ts-node ./src/vp/vp-send.ts",
-    "vp-send-verify": "ts-node ./src/vp/vp-send-verify.ts"
+    "vp-send-verify": "ts-node ./src/vp/vp-send-verify.ts",
+    "zkp": "ts-node ./src/zkp/zkp-full-process.ts"
   },
   "keywords": [],
   "author": "",

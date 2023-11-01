@@ -11,7 +11,8 @@ import { registerDidDoc } from "../utils/didHelper";
   const keyring = new Keyring();
   const did = keys.fromMnemonic(keyring, mnemonic, "ecdsa");
 
-  const doc = did.getDocument();
+  // get did document with proof
+  const doc = await did.getPublish();
 
   await registerDidDoc(doc);
 })();
