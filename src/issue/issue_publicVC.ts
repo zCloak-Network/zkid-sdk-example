@@ -16,15 +16,9 @@ import { getCtypeFromHash, sendKycRecord } from "./util";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-// TODO: only dev enviroment can run now
-// Dev .xyz
-const ctypeHash =
-  "0x2c4d3f094cc8d89a6ef86a42b69741fbcf913fb4bdffa2f0c4b0d69ce293a411";
-
-// Prod .app
 // ATTENTION: using this ctypehash in prod when issuing kyc public vc
-// const ctypeHash =
-//   "0xbc2995791cb5b02f6a35eda411648d71bd0c1c03f9489c05d1bebbd37e2d7664";
+const ctypeHash =
+  "0xbc2995791cb5b02f6a35eda411648d71bd0c1c03f9489c05d1bebbd37e2d7664";
 
 // ATTENTION: replace it with real KYC user's did
 const holderDidUrl: DidUrl =
@@ -36,6 +30,7 @@ const holderDidUrl: DidUrl =
   console.log("initCrypto for wasm...");
 
   // step0: get attester DID
+  // ATTENTION: using chaintool-attester DID
   // from DID-Keys-file
   const keyring = new Keyring();
   // const json = readDidKeysFile();

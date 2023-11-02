@@ -4,7 +4,6 @@ import axios from "axios";
 import type { CType } from "@zcloak/ctype/types";
 import type { VerifiableCredential } from "@zcloak/vc/types";
 
-// ATTENTION: if you run issue_publicVC script, please using https://card-service.zkid.xyz
 const baseUrl = "https://card-service.zkid.app";
 
 export const getCtypeFromHash = async (
@@ -16,7 +15,8 @@ export const getCtypeFromHash = async (
   }
 
   const res = await axios.get(`${url}/api/ctype?${qs.stringify({ id: id })}`);
-  if (res.status !== 200) {
+
+  if (res.status !== 200 || res.data.code !== 200 || res.data.data === null) {
     throw new Error(`ctype query failed ${id}`);
   }
 
@@ -34,7 +34,7 @@ export const sendMessage2Server = async (
     msg: message,
   };
   const sendRes = await axios.post(`${url}/api/message/`, fullMessage);
-  if (sendRes.status === 200) {
+  if (sendRes.status === 200 && sendRes.data.code === 200) {
     console.log(`SUCCESS: send encrypted message to server`);
   } else {
     console.log(`send encrypted message response status: ${sendRes.status}`);
@@ -46,9 +46,10 @@ export const sendKycRecord = async (
   url = baseUrl
 ) => {
   const res = await axios.post(`${url}/api/kyc/record/callback/save`, publicVC);
-  if (res.status === 200) {
+  res;
+  if (res.data.code === 200) {
     console.log(`SUCCESS: send public VC to server`);
   } else {
-    console.log(`send encrypted message response status: ${res.status}`);
+    console.log(`Fail: ${res.data.msg}`);
   }
 };
