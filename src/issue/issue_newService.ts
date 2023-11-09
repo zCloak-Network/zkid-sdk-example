@@ -68,7 +68,7 @@ const holderDidUrl: DidUrl =
   const rawCredential: RawCredential = raw.toRawCredential("Keccak256");
 
   // step4: build a vcBuilder by using rawCredential and ctype
-  // ATTENTION: set expirarion date with OCR result (example time is 2039/04/27 02/48/20 in milliseconds)
+  // TODO: set expirarion date with OCR result (example time is 2039/04/27 02/48/20 in milliseconds)
   const vcBuilder = VerifiableCredentialBuilder.fromRawCredential(
     rawCredential,
     ctype
