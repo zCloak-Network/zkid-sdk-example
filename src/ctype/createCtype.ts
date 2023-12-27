@@ -1,10 +1,11 @@
-import { initCrypto } from "@zcloak/crypto";
-import { getPublish, getCTypeHash } from "@zcloak/ctype";
 import { Keyring } from "@zcloak/keyring";
 import { restore } from "@zcloak/did/keys";
+import { initCrypto } from "@zcloak/crypto";
+import { getPublish, getCTypeHash } from "@zcloak/ctype";
 
 import type { BaseCType, CType } from "@zcloak/ctype/types";
 
+import { publishCtype } from "../utils/ctypeHelper";
 import { readDidKeysFile } from "../utils/didHelper";
 
 (async () => {
@@ -39,5 +40,6 @@ import { readDidKeysFile } from "../utils/didHelper";
   };
   const ctype: CType = await getPublish(base, attester);
   console.log(`ctype hash: ${getCTypeHash(base, attester.id)}`);
-  console.dir(ctype);
+  // await publishCtype(ctype);
+  // console.dir(ctype);
 })();
