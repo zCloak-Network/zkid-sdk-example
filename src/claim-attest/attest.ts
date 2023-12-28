@@ -9,26 +9,16 @@ import { decryptMessage, encryptMessage } from "@zcloak/message";
 import type { RawCredential } from "@zcloak/vc/types";
 import type { VerifiableCredential } from "@zcloak/vc/types";
 
-import { resolver } from "../utils/resolverHelper";
 import { getMessage } from "../utils/messageHelper";
 import { getCtypeFromHash } from "../utils/ctypeHelper";
-import { fromDidDocument } from "@zcloak/did/did/helpers";
 import { sendMessage2Server } from "../utils/messageHelper";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
-
-const holderDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
 
 (async () => {
   // initCrypto for wasm
   await initCrypto();
   console.log("initCrypto for wasm...");
-
-  // Build claimer and attester DID
-  // Get holder DID from DidDocument
-  // We only need holder's KeyAgreement Public Key to search message
-  const holderDidDoc = await resolver.resolve(holderDidUrl);
-  const holder = fromDidDocument(holderDidDoc);
 
   // Get attester DID from mnemonic
   // We need attester's private key to sign signature when approving send credential
@@ -36,13 +26,8 @@ const holderDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
   const keyring = new Keyring();
   const attester = keys.fromMnemonic(keyring, mnemonic, "ecdsa");
 
-  // Step 0: get message
-  const serverMsgOrigin = await getMessage(
-    holder,
-    attester,
-    "Request_Attestation"
-  );
-  const serverMsg = serverMsgOrigin.sort((a, b) => b.createTime - a.createTime);
+  // Step 0: get latest message
+  const serverMsg = await getMessage(attester, "Request_Attestation");
 
   // Step 1: decrypt claim message
   // serverMsg array is just for demo use, the details should be based on the actual situation

@@ -9,10 +9,10 @@ import { encryptMessage } from "@zcloak/message";
 import type { CType } from "@zcloak/ctype/types";
 import type { DidUrl } from "@zcloak/did-resolver/types";
 
-import { getCtypeFromHash } from "../utils/ctypeHelper";
-import { sendMessage2Server } from "../utils/messageHelper";
 import { resolver } from "../utils/resolverHelper";
+import { getCtypeFromHash } from "../utils/ctypeHelper";
 import { fromDidDocument } from "@zcloak/did/did/helpers";
+import { sendMessage2Server } from "../utils/messageHelper";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
