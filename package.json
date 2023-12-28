@@ -9,6 +9,7 @@
     "ctype": "ts-node ./src/ctype/createCtype.ts",
     "claim": "ts-node ./src/claim-attest/claim.ts",
     "attest": "ts-node ./src/claim-attest/attest.ts",
+    "multiAttest": "ts-node ./src/claim-attest/multiAttest.ts",
     "issue": "ts-node ./src/issue/issue.ts",
     "vp-send": "ts-node ./src/vp/vp-send.ts",
     "vp-send-verify": "ts-node ./src/vp/vp-send-verify.ts",
