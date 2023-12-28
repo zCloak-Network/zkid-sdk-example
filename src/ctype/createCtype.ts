@@ -5,8 +5,13 @@ import { getPublish, getCTypeHash } from "@zcloak/ctype";
 
 import type { BaseCType, CType } from "@zcloak/ctype/types";
 
-import { publishCtype } from "../utils/ctypeHelper";
 import { readDidKeysFile } from "../utils/didHelper";
+
+/**
+ * ATTENTION:
+ * The back-end API does not support upload CType structure currently, we recommend
+ * building CType by building the template in the Card Center (https://card.zkid.app/#/).
+ */
 
 (async () => {
   // attester
@@ -40,6 +45,5 @@ import { readDidKeysFile } from "../utils/didHelper";
   };
   const ctype: CType = await getPublish(base, attester);
   console.log(`ctype hash: ${getCTypeHash(base, attester.id)}`);
-  // await publishCtype(ctype);
-  // console.dir(ctype);
+  console.dir(ctype);
 })();
