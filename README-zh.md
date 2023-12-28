@@ -37,7 +37,7 @@ npm run zkp
 在 issue文件夹下，只包含一个 issue.ts脚本文件，该文件用于展示签发 VC的 issue模式，即 attester直接向指定用户签发一个 VC，用户不需要提前请求。
 
 **ctype**
-在 ctype文件夹中，只包含一个 createCtype.ts脚本文件，该文件用于展示如何创建一个 ctype。建议各位开发者使用 [credential 平台](https://cred.zkid.app)创建 ctype。
+在 ctype文件夹中，只包含一个 createCtype.ts脚本文件，该文件用于展示如何创建一个 ctype。建议各位开发者使用 [card center 平台](https://card.zkid.app/#/)创建 ctype。Card Maker => Create New Template，其中 Template 为 CType 的上层结构体，创建 Template 后，Data Field Hash 即为 ctype hash。
 
 ### 📨 Issue Credential API Tutorial
 
@@ -62,9 +62,7 @@ const password = "12345678"; // password to decrypt your DID-keys-file
 const attester = restore(keyring, json, password);
 
 // src/utils/resolverHelper.ts
-export const resolver = new ArweaveDidResolver({
-  server: process.env.BASE_URL,
-});
+export const resolver = new ArweaveDidResolver();
 
 // src/utils/didHelper.ts
 export function readDidKeysFile() {
@@ -98,7 +96,7 @@ const ctype: CType = await getCtypeFromHash(ctypeHash);
 // src/utils/ctypeHelper.ts
 export async function getCtypeFromHash(
   hash: string | undefined,
-  url = "https://did-service.zkid.app"
+  url = process.env.BASE_URL
 ): Promise<CType> {
   if (hash === undefined) {
     throw new Error("ctype hash undefined !!!");
@@ -108,7 +106,7 @@ export async function getCtypeFromHash(
   if (res.status !== 200) {
     throw new Error(`ctype query failed ${hash}`);
   }
-  const ctype: CType = res.data.data[0].rawData;
+  const ctype: CType = res.data.data.rawData;
   return ctype;
 }
 ```
@@ -186,9 +184,15 @@ await sendMessage2Server(message);
 // src/utils/messageHelper.ts
 export async function sendMessage2Server(
   message: any,
-  url = "https://did-service.zkid.app"
+  templateId = -1,
+  token = null,
+  url = process.env.BASE_URL
 ): Promise<void> {
-  const sendRes = await axios.post(`${url}/wxBlockchainEvent/message`, message);
+  const sendRes = await axios.post(`${url}/message`, {
+    templateId,
+    msg: message,
+    token,
+  });
   if (sendRes.status === 200) {
     console.log(`SUCCESS: send encrypted message to server`);
   } else {
@@ -196,5 +200,5 @@ export async function sendMessage2Server(
   }
 }
 ```
-在该步骤中，我们通过 axios向服务器发送加密后的消息，我们的后端服务在接收到该加密消息后会将消息推送到 credential平台。
+在该步骤中，我们通过 axios向服务器发送加密后的消息，我们的后端服务在接收到该加密消息后会将消息推送到 card center平台。
 使用该加密通信方式是为了保护用户的 VC隐私，所有经过 zCloak服务器的内容均为加密后的信息；对于发送 VC的情景，只有 claimer (即用户自己)才能解密该 message，zCloak 只做中间邮递人。
