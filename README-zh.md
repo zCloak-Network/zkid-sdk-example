@@ -4,6 +4,8 @@ Hi👋，各位开发者🧑‍💻，本教程将向你展示如何使用 SDK�
 
 各位Attester🧑🏻‍⚖️，准备好了么?🚀 让我们出发吧！！！
 
+⚠️ 最新的代码分支为 **sdk-v2**，请确保您的服务是基于 **sdk-v2**分支进行开发。
+
 ## 快速使用
 
 请确保使用最新兼容版本，您可以使用 `npm update` 命令来升级依赖。
@@ -13,9 +15,11 @@ git clone https://github.com/zCloak-Network/zkid-sdk-example.git
 cd zkid-sdk-example/
 npm install
 
+npm run create-did
 npm run ctype
 npm run claim
 npm run attest
+npm run multiAttest
 npm run issue
 npm run vp-send
 npm run vp-send-verify
