@@ -33,7 +33,6 @@ const holderDidUrl: DidUrl =
 
   // step0: get holder and attester Did obj
   // get holder DID from DidDocument
-  // we only need holders's public key to encrypt message
   const holderDidDoc = await resolver.resolve(holderDidUrl);
   const holder = fromDidDocument(holderDidDoc);
 
