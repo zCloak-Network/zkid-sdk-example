@@ -50,7 +50,7 @@ const issue = async () => {
   const raw = new Raw({
     contents: {
       id: 9870456,
-      name: "vss-claimer",
+      name: "vss-holder",
     },
     owner: holderDidUrl,
     ctype: ctype,

@@ -16,7 +16,7 @@ import { sendMessage2Server } from "../utils/messageHelper";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-const holderDidUrl =
+const claimerDidUrl =
   "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea" as DidUrl;
 const attesterDidUrl =
   "did:zk:0xB16FEfFaED0630F4C580a58ae0349C68609A6fDc" as DidUrl;
@@ -26,9 +26,9 @@ const attesterDidUrl =
   // init crypto for wasm
   await initCrypto();
 
-  // get holder DID from mnemonic (we need claimer's private key)
+  // get claimer DID from mnemonic (we need claimer's private key)
   const keyring = new Keyring();
-  const holder = keys.fromMnemonic(
+  const claimer = keys.fromMnemonic(
     keyring,
     process.env.CLAIMER_MNEMONIC as string,
     "ecdsa"
@@ -50,7 +50,7 @@ const attesterDidUrl =
       id: 9870456,
       name: "vss-claimer",
     },
-    owner: holderDidUrl,
+    owner: claimerDidUrl,
     ctype: ctype,
     hashType: "Keccak256",
   });
@@ -60,7 +60,7 @@ const attesterDidUrl =
   const message = await encryptMessage(
     "Request_Attestation",
     rawCredential,
-    holder,
+    claimer,
     attester.getKeyUrl("keyAgreement"),
     undefined,
     resolver
