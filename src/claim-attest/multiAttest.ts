@@ -18,7 +18,7 @@ import { sendMessage2Server } from "../utils/messageHelper";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-const holderDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
+const claimerDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
 
 (async () => {
   // initCrypto for wasm
@@ -26,10 +26,10 @@ const holderDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
   console.log("initCrypto for wasm...");
 
   // Build claimer and attester DID
-  // Get holder DID from DidDocument
-  // We only need holder's KeyAgreement Public Key to search message
-  const holderDidDoc = await resolver.resolve(holderDidUrl);
-  const holder = fromDidDocument(holderDidDoc);
+  // Get claimer DID from DidDocument
+  // We only need claimer's KeyAgreement Public Key to search message
+  const claimerDidDoc = await resolver.resolve(claimerDidUrl);
+  const claimer = fromDidDocument(claimerDidDoc);
 
   // Get attester DID from mnemonic
   // We need attester's private key to sign signature when approving send credential
@@ -98,11 +98,11 @@ const holderDidUrl = "did:zk:0xE5b8641d32a434BF3B5E6Ea6AFfdA1B56c558eea";
     "Response_Approve_Attestation",
     multi_attester_vc,
     attester,
-    holder.getKeyUrl("keyAgreement"),
+    claimer.getKeyUrl("keyAgreement"),
     decrypted2.id
   );
   console.log(multi_attester_vc);
 
-  // Step 12: send encrypted message to server (attester2 => holder)
+  // Step 12: send encrypted message to server (attester2 => claimer)
   await sendMessage2Server(final_message);
 })();
