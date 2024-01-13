@@ -29,11 +29,13 @@ export async function sendMessage2Server(
 export async function getMessage(
   receiver: Did,
   msgType: string,
+  page = 1,
+  size = 1,
   url = process.env.BASE_URL
 ) {
   const param = qs.stringify({
-    page: 1,
-    size: 1,
+    page,
+    size,
     receiver: receiver.getKeyUrl("keyAgreement"),
     msgType: msgType,
   });
