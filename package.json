@@ -25,6 +25,7 @@
     "@zcloak/did-resolver": "^2.0.0",
     "@zcloak/keyring": "^2.0.0",
     "@zcloak/message": "^2.0.0",
+    "@zcloak/miden": "^2.0.0",
     "@zcloak/vc": "^2.0.0",
     "@zcloak/verify": "^2.0.0",
     "axios": "^1.3.4",
