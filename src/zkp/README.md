@@ -77,12 +77,12 @@ First, you need to recover digest hash.
 
 ```typescript
 const digestPayload: DigestPayload<VerifiableCredentialVersion> = {
-    rootHash: `0x${rootHash}`,
-    holder: holderDidUrl,
-    issuanceDate,
-    expirationDate,
-    ctype: ctypeHash,
-  };
+  rootHash,
+  holder: holderDidUrl,
+  issuanceDate,
+  expirationDate,
+  ctype: ctypeHash,
+};
 const digestObj = calcDigest(credentialVersion, digestPayload);
 ```
 Note: `rootHash` field of DigestPayload should be recoverd rootHash from zkp verify result at step5.
@@ -96,10 +96,9 @@ if (credentialVersion == "1") {
 } else if (credentialVersion == "0") {
   message = digestObj.digest;
 } else {
-  console.error(
+  throw new Error(
     `Wrong credential version, your version is ${credential.version}`
   );
-  return;
 }
 const res = await proofVerify(message, credential.proof[0]);
 ```

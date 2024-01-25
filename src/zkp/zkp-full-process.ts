@@ -19,10 +19,11 @@ import type {
   VerifiableCredentialVersion,
 } from "@zcloak/vc/types";
 import type { DigestPayload } from "@zcloak/vc";
+import type { HexString } from "@zcloak/crypto/types";
 import type { ProgramConstraints } from "@zcloak/miden/types";
 
 const BLANK_HASH =
-  "0000000000000000000000000000000000000000000000000000000000000000";
+  "0x0000000000000000000000000000000000000000000000000000000000000000";
 
 (async () => {
   await initCrypto();
@@ -52,9 +53,10 @@ const BLANK_HASH =
   const rootHashRes = calcRoothash(
     credential.credentialSubject as AnyJson,
     credential.hasher[0],
+    credential.version,
     credential.credentialSubjectNonceMap
   );
-  console.log("Credential rootHash: ", rootHashRes.rootHash);
+  console.log("Original vc rootHash: ", rootHashRes.rootHash);
 
   // step3: execute zk program
   const zkpResult = executeZkProgram(program, "", secretInput);
@@ -71,7 +73,7 @@ const BLANK_HASH =
   // step5: verify whether the entire program was faithfully executed
   // NOTE: Starting from step 5, the following operations are generally performed
   //       from the back-end.
-  let rootHash: string;
+  let rootHash: HexString;
   const ctypeHash = credential.ctype;
   const holderDidUrl = credential.holder;
   const issuanceDate = credential.issuanceDate;
@@ -84,14 +86,15 @@ const BLANK_HASH =
         Authorization: "bearer",
       },
     });
-    console.log(`Recovered credential rootHash: 0x${res.data.roothash}`);
-    if (res.data.roothash === BLANK_HASH) {
-      console.log(
-        "Invalid VC: commit rootHash not equal to recoverd rootHash !!!"
-      );
-      return;
+    rootHash = `0x${res.data.roothash}`;
+    console.log(`Recovered rootHash:    ${rootHash}`);
+
+    if (rootHash === BLANK_HASH) {
+      throw new Error("Invalid VC: recoverd rootHash is empty !!!");
+    } else if (rootHash !== rootHashRes.rootHash) {
+      throw new Error("Original vc rootHash not match recovered rootHash !!!");
     }
-    rootHash = res.data.roothash;
+
     console.log(
       `Whether the entire program was faithfully executed? ${res.data.is_valid}\n`
     );
@@ -103,7 +106,7 @@ const BLANK_HASH =
   // step6: verify credential is valid (verify attester signature)
   // a, build digest
   const digestPayload: DigestPayload<VerifiableCredentialVersion> = {
-    rootHash: `0x${rootHash}`,
+    rootHash,
     holder: holderDidUrl,
     issuanceDate,
     expirationDate,
@@ -119,16 +122,14 @@ const BLANK_HASH =
   } else if (credentialVersion == "0") {
     message = digestObj.digest;
   } else {
-    console.error(
+    throw new Error(
       `Wrong credential version, your version is ${credential.version}`
     );
-    return;
   }
   const res = await proofVerify(message, credential.proof[0]);
   console.log("Attester signature verify result: ", res);
   if (res === false) {
-    console.error("Invalid VC: can not pass attester signature verify !!!");
-    return;
+    throw new Error("Invalid VC: can not pass attester signature verify !!!");
   }
 
   // step7: judge whether greater than or equal to 18 years old
